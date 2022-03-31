@@ -3,7 +3,7 @@
 set -u
 set -e
 
-LC_NUMERIC=C
+export LC_NUMERIC=C
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$CURRENT_DIR/helpers.sh"
