@@ -48,8 +48,8 @@ print_swap() {
   local swap_free=$(echo $swap_usage | awk -v scale="$size_scale" '{ print $1/scale }')
   local swap_used=$(echo $swap_usage | awk -v scale="$size_scale" '{ print $2/scale }')
   local swap_total=$(echo "$swap_free + $swap_used" | calc)
-  local swap_pused=$(echo "($swap_used / $swap_total) * 100" | calc)
-  local swap_pfree=$(echo "($swap_free / $swap_total) * 100" | calc)
+  local swap_pused=$([[ $swap_total -eq 0 ]] && printf '0' || { echo "($swap_used / ($swap_total + 1)) * 100" | calc; })
+  local swap_pfree=$([[ $swap_total -eq 0 ]] && printf '0' || { echo "($swap_free / ($swap_total + 1)) * 100" | calc; })
 
   # Calculate colors for mem and swap
   local swap_color=$(get_swap_color "$swap_pused")
